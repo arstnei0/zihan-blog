@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from "astro:content"
+import "./PostCard.scss"
+import { getDateString, getUrlFromPostSlug } from "~/lib/post"
+import Tags from "./Tags.astro"
+
+export interface Props {
+	post: CollectionEntry<"blog">
+}
+
+const { post } = Astro.props
+const date = getDateString(post.data.date)
+---
+
+<div class="post-card">
+	{
+		post.data.image && post.data.image.src && (
+			<div class="post-card-image">
+				<img
+					src={post.data.image ? post.data.image.src : ""}
+					alt={post.data.image?.alt}
+				/>
+			</div>
+		)
+	}
+
+	<div class="post-card-body">
+		<div class="post-info-1">
+			<h1 class="post-title">
+				<a href={getUrlFromPostSlug(post.slug)}>
+					{post.data.title}
+				</a>
+			</h1>
+
+			<span class="post-date">{date}</span>
+		</div>
+
+		<Tags tags={post.data.tags} />
+
+		<p class="post-desc">{post.data.description}</p>
+	</div>
+</div>

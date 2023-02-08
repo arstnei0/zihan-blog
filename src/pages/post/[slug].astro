@@ -1,0 +1,67 @@
+---
+import { getCollection, getEntryBySlug, CollectionEntry } from "astro:content"
+import { GetStaticPaths } from "astro"
+import Layout from "~/layouts/Layout.astro"
+import "~/styles/typography.sass"
+import { getDateString, sortPosts } from "~/lib/post"
+import Sidebar from "~/components/layout/Sidebar"
+import Tags from "~/components/functional/Tags.astro"
+
+export const getStaticPaths: GetStaticPaths = async () => {
+	const posts = await getCollection("blog")
+
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+	}))
+}
+
+const { slug } = Astro.params as { slug: CollectionEntry<"blog">["slug"] }
+const post = await getEntryBySlug("blog", slug)
+const content = await post.render()
+const { Content, headings } = content
+---
+
+<Layout title={post.data.title}>
+	<div id="article-wrap">
+		<article>
+			<a href="javascript:window.location.hash='title';scrollToThePos();">
+				<h1 id="title" class="post-title">{post.data.title}</h1>
+			</a>
+			<Tags tags={post.data.tags} /><br />
+			<span class="post-date">{getDateString(post.data.date)}</span>
+			<p class="post-desc">{post.data.description}</p>
+
+			<Content />
+		</article>
+
+		<Sidebar headings={headings} client:media="(min-width: 700px)" />
+	</div>
+</Layout>
+
+<style lang="sass" is:global>
+	@import "style"
+
+	#article-wrap
+		display: flex
+
+	.post-title
+		font-size: 3em
+		font-family: $serif
+		color: $font-color-primary
+
+	@include desk
+		article
+			width: 65%
+
+	@include desk
+		article
+			margin: 4em
+
+	.post-date
+		color: $font-color-secondary
+		font-size: 1em
+
+	.post-desc
+		color: $font-color-secondary
+		font-size: 1.1em
+</style>

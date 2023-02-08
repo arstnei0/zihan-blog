@@ -1,0 +1,58 @@
+@import "./imports"
+@import "./heading"
+
+#home-hero
+    @include desk
+        $margin: 8em
+        margin-left: $margin
+        margin-right: $margin
+        margin-top: 5em
+    text-align: center
+
+    & #first
+        &:first-child
+            z-index: 10
+
+        & #three-d
+            // position: absolute
+            // top: 50%
+            // right: 0
+            // z-index: 1
+
+            @include mob
+                display: none
+
+    & #home-hero-text
+        font-weight: 400
+        font-family: $serif
+        font-size: 4em
+
+    & #home-hero-desc
+        font-size: $font-size-primary
+        color: $font-color-secondary
+        margin-bottom: 1.5em
+
+    & #home-hero-actions
+        & > *
+            margin: 1.5em
+
+    & #interested-about-me
+        margin-top: 5em
+        font-size: 1.3em
+        line-height: 2em
+
+        & a
+            font-size: 1.4em
+
+#wwm-contact-me
+    font-size: 1.3em
+
+#shine-text-1
+    background: linear-gradient(90deg, #ff1b6b, #45caff)
+    -webkit-background-clip: text
+    -webkit-text-fill-color: transparent
+
+#shine-text-2
+    background: linear-gradient(90deg, #84ffc9, #aab2ff, #eca0ff)
+    -webkit-background-clip: text
+    -webkit-text-fill-color: transparent

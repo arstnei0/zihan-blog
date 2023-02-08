@@ -1,0 +1,52 @@
+---
+import { EMAIL_URL, GITHUB_URL, TWITTER_URL } from "~/config"
+import { Hoverable } from "../decorative/cursor/Cursor"
+import A from "../primitive/A.astro"
+---
+
+<footer>
+	<div id="site-os">
+		Zihan Blog. <br />This site is open source at &nbsp;
+		<A href="https://github.com/zihan-ch/zihan-blog" target="_blank">
+			Github
+		</A>.
+	</div>
+	<div style="min-width: 100px;">
+		<Hoverable client:idle>
+			<a target="_blank" href={GITHUB_URL}>My Github</a>
+		</Hoverable>
+		<br />
+		<Hoverable client:idle>
+			<a target="_blank" href={TWITTER_URL}>My Twitter</a>
+		</Hoverable>
+		<br />
+		<Hoverable client:idle>
+			<a target="_blank" href={EMAIL_URL}>My Email</a>
+		</Hoverable>
+		<br />
+	</div>
+</footer>
+
+<style lang="sass">
+	@import "../../styles/imports.sass"
+
+	footer
+		@include desk
+			margin: 4em
+			margin-top: 10em
+		@include mob
+			margin: .5em
+			margin-top: 10em
+
+		display: flex
+		justify-content: space-between
+		align-items: center
+
+		& #site-os a
+			color: $font-color-accent
+
+		& *
+			color: $font-color-secondary
+			@include mob
+				font-size: 1.1em
+</style>
